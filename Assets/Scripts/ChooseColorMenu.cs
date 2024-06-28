@@ -18,7 +18,6 @@ public class ChooseColorMenu : MonoBehaviour
     }
 
     void ActivateChooseColorMenu () {
-        Time.timeScale = 0f;
         chooseColorMenuUI.SetActive(true);
     }
 
@@ -37,7 +36,9 @@ public class ChooseColorMenu : MonoBehaviour
 
     void ColorButton(string color) {
         gameManager.openCardClone.GetComponent<Card>().color = color;
+        gameManager.openCardClone.GetComponent<Card>().SetSprite(gameManager.openCardClone);
         chooseColorMenuUI.SetActive(false);
-        Time.timeScale = 1f;
+        gameManager.activePlayer.needToChooseColor = false;
+        gameManager.activePlayer.canPlay = false;
     }
 }

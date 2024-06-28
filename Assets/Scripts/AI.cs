@@ -52,6 +52,7 @@ public class AI: Player
             if (playedCard.color == "WILD") {
                 int colorIndex = new System.Random().Next(colors.Length);
                 openCard.SetValues(colors[colorIndex], playedCard.value);
+                openCard.SetSprite(gameManager.openCardClone);
             }
             RealigneHand(3);
         }

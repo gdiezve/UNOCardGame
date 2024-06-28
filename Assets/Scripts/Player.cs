@@ -65,8 +65,4 @@ public class Player : MonoBehaviour
             cardIndex += 1;
         }
     }
-
-    public void ChooseWildCardColor() {
-
-    }
 }
