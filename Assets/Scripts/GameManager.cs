@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public GameObject card;
     [SerializeField] GameObject deck;
     public GameObject deckClone, openCardClone;
-    Card firstCard;
     Player player1;
     public Player activePlayer;
     AI aiPlayer;
@@ -34,7 +33,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (firstCard == null) {
+        if (turn.turnNumber == 0) {
             SetOpenCard();
             InitializePlayersHand();
             turn.turnNumber = 1;
@@ -43,7 +42,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void SetOpenCard() {
-        firstCard = deckClone.GetComponent<Deck>().DrawFromDeck();
+        Card firstCard = deckClone.GetComponent<Deck>().DrawFromDeck();
         while (specialAndWildCards.Contains(firstCard.value)) {
             firstCard = deckClone.GetComponent<Deck>().DrawFromDeck(); 
         }

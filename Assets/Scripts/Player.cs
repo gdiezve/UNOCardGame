@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public List<GameObject> playableHand = new();
     public bool canPlay = true;
     public int drawnInTurnNumber = -1;
+    public bool needToChooseColor = false;
 
     public void EvaluateHand(Card openCard) {
         playableHand.Clear();
@@ -46,6 +47,9 @@ public class Player : MonoBehaviour
             }
         }
         RealigneHand(-3);
+        if (playedCard.color == "WILD") {
+            needToChooseColor = true;
+        }
         canPlay = false;
     }
 
@@ -60,5 +64,9 @@ public class Player : MonoBehaviour
             card.GetComponent<SpriteRenderer>().sortingOrder = cardIndex+1;
             cardIndex += 1;
         }
+    }
+
+    public void ChooseWildCardColor() {
+
     }
 }

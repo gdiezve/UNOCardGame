@@ -1,8 +1,10 @@
+using System.Linq;
 using UnityEngine;
 
 public class AI: Player
 {
     private readonly Vector3 initialCardPosition = new(0,0,0);
+    private readonly string[] colors = {"RED", "BLU", "YEL", "GRE"};
     GameManager gameManager;
     Deck deck;
     Card openCard;
@@ -46,6 +48,10 @@ public class AI: Player
                     hand.Remove(card);
                     break;
                 }
+            }
+            if (playedCard.color == "WILD") {
+                int colorIndex = new System.Random().Next(colors.Length);
+                openCard.SetValues(colors[colorIndex], playedCard.value);
             }
             RealigneHand(3);
         }
