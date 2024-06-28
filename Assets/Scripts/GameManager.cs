@@ -1,7 +1,6 @@
-using System;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,12 +10,12 @@ public class GameManager : MonoBehaviour
     public GameObject card;
     [SerializeField] GameObject deck;
     public GameObject deckClone, openCardClone;
-    Card firstCard;
     Player player1;
     public Player activePlayer;
     AI aiPlayer;
     public Turn turn;
-    //bool winner = false;
+    public bool winner = false;
+    public string winnerName;
 
     // Start is called before the first frame update
     void Start()
@@ -34,28 +33,31 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (firstCard == null) {
-            SetOpenCard();
-            InitializePlayersHand();
-            turn.turnNumber = 1;
+        if(SceneManager.GetActiveScene().buildIndex == 1) {
+            if (turn.turnNumber == 0) {
+                SetOpenCard();
+                InitializePlayersHand();
+                turn.turnNumber = 1;
+            } else if (turn.turnNumber >= 1) {
+                turn.PlayTurn(activePlayer, aiPlayer, openCardClone.GetComponent<Card>(), deckClone.GetComponent<Deck>(), card);
+            }
         }
-        turn.PlayTurn(activePlayer, aiPlayer, openCardClone.GetComponent<Card>(), deckClone.GetComponent<Deck>(), card);
     }
 
     private void SetOpenCard() {
-        firstCard = deckClone.GetComponent<Deck>().DrawFromDeck();
+        Card firstCard = deckClone.GetComponent<Deck>().DrawFromDeck();
         while (specialAndWildCards.Contains(firstCard.value)) {
             firstCard = deckClone.GetComponent<Deck>().DrawFromDeck(); 
         }
         openCardClone.GetComponent<Card>().SetValues(firstCard.color, firstCard.value);
         openCardClone.GetComponent<Card>().SetSprite(openCardClone);
+        openCardClone.GetComponent<Card>().playedBy = "AI"; // TODO: change to not be hardcoded
         openCardClone.GetComponent<SpriteRenderer>().sortingOrder = 1;
+        deckClone.GetComponent<Deck>().DiscardCard(firstCard);
     }
 
     private void InitializePlayersHand() {
-        for(int i=0; i<7; i++) {
-            player1.Draw(openCardClone.GetComponent<Card>(), deckClone.GetComponent<Deck>(), card, turn.turnNumber);
-            aiPlayer.Draw(openCardClone.GetComponent<Card>(), deckClone.GetComponent<Deck>(), card, turn.turnNumber);
-        }
+        player1.Draw(openCardClone.GetComponent<Card>(), deckClone.GetComponent<Deck>(), card, 7);
+        aiPlayer.Draw(openCardClone.GetComponent<Card>(), deckClone.GetComponent<Deck>(), card, 7);
     }
 }
