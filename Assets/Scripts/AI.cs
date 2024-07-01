@@ -49,11 +49,7 @@ public class AI: Player
                     break;
                 }
             }
-            if (playedCard.color == "WILD") {
-                int colorIndex = new System.Random().Next(colors.Length);
-                openCard.SetValues(colors[colorIndex], playedCard.value);
-                openCard.SetSprite(gameManager.openCardClone);
-            }
+            EvaluatePlayedCard(playedCard); 
             RealigneHand(3);
         }
         canPlay = false;
@@ -63,5 +59,13 @@ public class AI: Player
         SpriteRenderer spriteRenderer = cardClone.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = Resources.Load<Sprite>("CARDBACK");
         cardClone.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+    }
+
+    private void EvaluatePlayedCard(Card playedCard) {
+        if (playedCard.color == "WILD") {
+            int colorIndex = new System.Random().Next(colors.Length);
+            openCard.SetValues(colors[colorIndex], playedCard.value);
+            openCard.SetSprite(gameManager.openCardClone);
+        }
     }
 }

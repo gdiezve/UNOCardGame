@@ -47,9 +47,7 @@ public class Player : MonoBehaviour
             }
         }
         RealigneHand(-3);
-        if (playedCard.color == "WILD") {
-            needToChooseColor = true;
-        }
+        EvaluatePlayedCard(playedCard); 
         canPlay = false;
     }
 
@@ -63,6 +61,12 @@ public class Player : MonoBehaviour
             card.GetComponent<Card>().CardAlignment(cardIndex, hand.Count, card, desideredYOffset);
             card.GetComponent<SpriteRenderer>().sortingOrder = cardIndex+1;
             cardIndex += 1;
+        }
+    }
+
+    private void EvaluatePlayedCard(Card playedCard) {
+        if (playedCard.color == "WILD") {
+            needToChooseColor = true;
         }
     }
 }
