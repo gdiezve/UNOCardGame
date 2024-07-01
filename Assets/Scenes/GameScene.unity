@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 179000929}
   - component: {fileID: 179000928}
   m_Layer: 0
-  m_Name: bacground
+  m_Name: background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
