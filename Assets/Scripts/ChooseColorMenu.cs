@@ -38,7 +38,7 @@ public class ChooseColorMenu : MonoBehaviour
         gameManager.openCardClone.GetComponent<Card>().color = color;
         gameManager.openCardClone.GetComponent<Card>().SetSprite(gameManager.openCardClone);
         chooseColorMenuUI.SetActive(false);
-        gameManager.activePlayer.needToChooseColor = false;
         gameManager.activePlayer.canPlay = false;
+        gameManager.activePlayer.needToChooseColor = false;
     }
 }
