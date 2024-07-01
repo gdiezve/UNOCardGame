@@ -51,6 +51,7 @@ public class AI: Player
             }
             EvaluatePlayedCard(playedCard); 
             RealigneHand(3);
+            CheckWin();
         }
         canPlay = false;
     }

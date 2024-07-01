@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour
     public Player activePlayer;
     AI aiPlayer;
     public Turn turn;
-    //bool winner = false;
+    public bool winner = false;
+    public string winnerName;
 
     // Start is called before the first frame update
     void Start()

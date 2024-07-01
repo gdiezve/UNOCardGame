@@ -10,6 +10,13 @@ public class Player : MonoBehaviour
     public bool canPlay = true;
     public int drawnInTurnNumber = -1;
     public bool needToChooseColor = false;
+    GameManager gameManager;
+
+    void Update() {
+        if (gameManager == null) {
+            gameManager = FindObjectOfType<GameManager>();
+        }
+    }
 
     public void EvaluateHand(Card openCard) {
         playableHand.Clear();
@@ -47,7 +54,8 @@ public class Player : MonoBehaviour
             }
         }
         RealigneHand(-3);
-        EvaluatePlayedCard(playedCard); 
+        EvaluatePlayedCard(playedCard);
+        CheckWin();
         canPlay = false;
     }
 
@@ -67,6 +75,13 @@ public class Player : MonoBehaviour
     private void EvaluatePlayedCard(Card playedCard) {
         if (playedCard.color == "WILD") {
             needToChooseColor = true;
+        }
+    }
+
+    public void CheckWin() {
+        if (hand.Count == 0) {
+            gameManager.winnerName = playerName;
+            gameManager.winner = true;
         }
     }
 }
