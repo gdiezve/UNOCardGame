@@ -6,7 +6,6 @@ public class Card : MonoBehaviour
 {
     public string color;
     public string value;
-    private readonly string[] wildValues = { "PL4", "COL" };
     public bool canBePlayed = false;
     GameManager gameManager;
     Deck deck;
@@ -28,7 +27,7 @@ public class Card : MonoBehaviour
     }
 
     public bool EvaluateCard(string openColor, string openValue) {
-        if (openColor == color || openValue == value || wildValues.Contains(value)) {
+        if (openColor == color || openValue == value || openValue == "COL") {
             canBePlayed = true;
             return true;
         }
