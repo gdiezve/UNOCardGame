@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
         if (drawnInTurnNumber != turnNumber) {
             Card card = deck.DrawFromDeck();
             GameObject cardClone = Instantiate(cardObject, initialCardPosition, Quaternion.identity);
-            cardClone.GetComponent<Card>().SetValues(card.color, card.value);
+            cardClone.GetComponent<Card>().SetValues(card.color, card.value, card.effects);
             cardClone.GetComponent<Card>().SetSprite(cardClone);
             hand.Add(cardClone);
             RealigneHand(-3);

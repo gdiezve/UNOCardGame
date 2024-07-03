@@ -1,11 +1,20 @@
-using System;
-using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
+
+public enum CardEffect {
+    NO_EFFECT,
+    LOSE_TURN,
+    CHANGE_COLOR,
+    CHANGE_DIR,
+    DRAW2,
+    DRAW4
+}
 
 public class Card : MonoBehaviour
 {
     public string color;
     public string value;
+    public List<CardEffect> effects = new();
     public bool canBePlayed = false;
     GameManager gameManager;
     Deck deck;
@@ -21,9 +30,11 @@ public class Card : MonoBehaviour
         }
     }
 
-    public void SetValues(string color, string value) {
+    public void SetValues(string color, string value, List<CardEffect> effects)
+    {
         this.color = color;
         this.value = value;
+        this.effects = effects;
     }
 
     public bool EvaluateCard(string openColor, string openValue) {
@@ -63,7 +74,7 @@ public class Card : MonoBehaviour
     void OnMouseDown() {
         if (canBePlayed) {
             deck.DiscardCard(openCard);
-            openCard.SetValues(color, value);
+            openCard.SetValues(color, value, effects);
             openCard.SetSprite(gameManager.openCardClone);
             activePlayer.PlayCard(this);
         }

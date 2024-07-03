@@ -21,7 +21,7 @@ public class AI: Player
         if (drawnInTurnNumber != turnNumber) {
             Card card = deck.DrawFromDeck();
             GameObject cardClone = Instantiate(cardObject, initialCardPosition, Quaternion.identity);
-            cardClone.GetComponent<Card>().SetValues(card.color, card.value);
+            cardClone.GetComponent<Card>().SetValues(card.color, card.value, card.effects);
             hand.Add(cardClone);
             SetSprite(cardClone);
             EvaluateHand(openCard);
@@ -40,7 +40,7 @@ public class AI: Player
             int cardIndex = new System.Random().Next(playableHand.Count-1);
             Card playedCard = playableHand[cardIndex].GetComponent<Card>();
             deck.DiscardCard(gameManager.openCardClone.GetComponent<Card>());
-            openCard.SetValues(playedCard.color, playedCard.value);
+            openCard.SetValues(playedCard.color, playedCard.value, playedCard.effects);
             openCard.SetSprite(gameManager.openCardClone);
             foreach (GameObject card in hand) {
                 if (playedCard == card.GetComponent<Card>()) {
@@ -65,7 +65,7 @@ public class AI: Player
     private void EvaluatePlayedCard(Card playedCard) {
         if (playedCard.color == "WILD") {
             int colorIndex = new System.Random().Next(colors.Length);
-            openCard.SetValues(colors[colorIndex], playedCard.value);
+            openCard.SetValues(colors[colorIndex], playedCard.value, playedCard.effects);
             openCard.SetSprite(gameManager.openCardClone);
         }
     }

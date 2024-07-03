@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         while (specialAndWildCards.Contains(firstCard.value)) {
             firstCard = deckClone.GetComponent<Deck>().DrawFromDeck(); 
         }
-        openCardClone.GetComponent<Card>().SetValues(firstCard.color, firstCard.value);
+        openCardClone.GetComponent<Card>().SetValues(firstCard.color, firstCard.value, firstCard.effects);
         openCardClone.GetComponent<Card>().SetSprite(openCardClone);
         openCardClone.GetComponent<SpriteRenderer>().sortingOrder = 1;
     }
