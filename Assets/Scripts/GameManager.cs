@@ -1,7 +1,6 @@
-using System;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -34,12 +33,15 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (turn.turnNumber == 0) {
-            SetOpenCard();
-            InitializePlayersHand();
-            turn.turnNumber = 1;
+        if(SceneManager.GetActiveScene().buildIndex == 1) {
+            if (turn.turnNumber == 0) {
+                SetOpenCard();
+                InitializePlayersHand();
+                turn.turnNumber = 1;
+            } else if (turn.turnNumber >= 1) {
+                turn.PlayTurn(activePlayer, aiPlayer, openCardClone.GetComponent<Card>(), deckClone.GetComponent<Deck>(), card);
+            }
         }
-        turn.PlayTurn(activePlayer, aiPlayer, openCardClone.GetComponent<Card>(), deckClone.GetComponent<Deck>(), card);
     }
 
     private void SetOpenCard() {
@@ -47,7 +49,7 @@ public class GameManager : MonoBehaviour
         while (specialAndWildCards.Contains(firstCard.value)) {
             firstCard = deckClone.GetComponent<Deck>().DrawFromDeck(); 
         }
-        openCardClone.GetComponent<Card>().SetValues(firstCard.color, firstCard.value, firstCard.effects);
+        openCardClone.GetComponent<Card>().SetValues(firstCard.color, firstCard.value);
         openCardClone.GetComponent<Card>().SetSprite(openCardClone);
         openCardClone.GetComponent<SpriteRenderer>().sortingOrder = 1;
     }

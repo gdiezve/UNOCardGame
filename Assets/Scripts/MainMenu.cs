@@ -1,10 +1,9 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public AudioListener audioListener;
+    [SerializeField] AudioListener audioListener;
     
     public void PlayButton() {
         audioListener.enabled = false;

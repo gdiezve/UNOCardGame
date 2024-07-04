@@ -62,51 +62,23 @@ public class Deck : MonoBehaviour
     private void BuildColorCards(string color) {
         foreach (int value in Enumerable.Range(0, 10)) {
             Card card = gameObject.AddComponent<Card>();
-            card.SetValues(color, value.ToString(), GetCardEffects(value.ToString()));
+            card.SetValues(color, value.ToString());
         }
     }
 
     private void BuildSpecialCards(string color) {
         foreach (string value in specialCards) {
             Card card = gameObject.AddComponent<Card>();
-            card.SetValues(color, value, GetCardEffects(value));
+            card.SetValues(color, value);
         }
     }
 
     private void BuildWildCards() {
         foreach (string value in wildCards) {
             Card card = gameObject.AddComponent<Card>();
-            card.SetValues("WILD", value, GetCardEffects(value));
+            card.SetValues("WILD", value);
         }
     } 
-
-    private List<CardEffect> GetCardEffects(string value) {
-        List<CardEffect> effects = new();
-        switch (value) {
-            case "SKI":
-                effects.Add(CardEffect.LOSE_TURN);
-                return effects; 
-            case "REV":
-                effects.Add(CardEffect.CHANGE_DIR);
-                effects.Add(CardEffect.LOSE_TURN);
-                return effects;
-            case "PL2":
-                effects.Add(CardEffect.LOSE_TURN);
-                effects.Add(CardEffect.DRAW2);
-                return effects;
-            case "COL":
-                effects.Add(CardEffect.CHANGE_COLOR);
-                return effects; 
-            case "PL4":
-                effects.Add(CardEffect.LOSE_TURN);
-                effects.Add(CardEffect.CHANGE_COLOR);
-                effects.Add(CardEffect.DRAW4);
-                return effects; 
-            default:
-                effects.Add(CardEffect.NO_EFFECT);
-                return effects;
-        }
-    }
 
     void OnMouseDown() {
         activePlayer.Draw(openCard, this, gameManager.card, gameManager.turn.turnNumber);

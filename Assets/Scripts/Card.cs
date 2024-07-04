@@ -1,20 +1,12 @@
-using System.Collections.Generic;
+using System;
+using System.Linq;
 using UnityEngine;
-
-public enum CardEffect {
-    NO_EFFECT,
-    LOSE_TURN,
-    CHANGE_COLOR,
-    CHANGE_DIR,
-    DRAW2,
-    DRAW4
-}
 
 public class Card : MonoBehaviour
 {
     public string color;
     public string value;
-    public List<CardEffect> effects = new();
+    private readonly string[] wildValues = { "PL4", "COL" };
     public bool canBePlayed = false;
     GameManager gameManager;
     Deck deck;
@@ -30,15 +22,13 @@ public class Card : MonoBehaviour
         }
     }
 
-    public void SetValues(string color, string value, List<CardEffect> effects)
-    {
+    public void SetValues(string color, string value) {
         this.color = color;
         this.value = value;
-        this.effects = effects;
     }
 
     public bool EvaluateCard(string openColor, string openValue) {
-        if (openColor == color || openValue == value || openValue == "COL") {
+        if (openColor == color || openValue == value || wildValues.Contains(value)) {
             canBePlayed = true;
             return true;
         }
@@ -74,7 +64,7 @@ public class Card : MonoBehaviour
     void OnMouseDown() {
         if (canBePlayed) {
             deck.DiscardCard(openCard);
-            openCard.SetValues(color, value, effects);
+            openCard.SetValues(color, value);
             openCard.SetSprite(gameManager.openCardClone);
             activePlayer.PlayCard(this);
         }

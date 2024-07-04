@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 
 public class AI: Player
@@ -21,7 +20,7 @@ public class AI: Player
         if (drawnInTurnNumber != turnNumber) {
             Card card = deck.DrawFromDeck();
             GameObject cardClone = Instantiate(cardObject, initialCardPosition, Quaternion.identity);
-            cardClone.GetComponent<Card>().SetValues(card.color, card.value, card.effects);
+            cardClone.GetComponent<Card>().SetValues(card.color, card.value);
             hand.Add(cardClone);
             SetSprite(cardClone);
             EvaluateHand(openCard);
@@ -40,7 +39,7 @@ public class AI: Player
             int cardIndex = new System.Random().Next(playableHand.Count-1);
             Card playedCard = playableHand[cardIndex].GetComponent<Card>();
             deck.DiscardCard(gameManager.openCardClone.GetComponent<Card>());
-            openCard.SetValues(playedCard.color, playedCard.value, playedCard.effects);
+            openCard.SetValues(playedCard.color, playedCard.value);
             openCard.SetSprite(gameManager.openCardClone);
             foreach (GameObject card in hand) {
                 if (playedCard == card.GetComponent<Card>()) {
@@ -65,8 +64,15 @@ public class AI: Player
     private void EvaluatePlayedCard(Card playedCard) {
         if (playedCard.color == "WILD") {
             int colorIndex = new System.Random().Next(colors.Length);
-            openCard.SetValues(colors[colorIndex], playedCard.value, playedCard.effects);
+            openCard.SetValues(colors[colorIndex], playedCard.value);
             openCard.SetSprite(gameManager.openCardClone);
+        }
+    }
+
+    private void CheckWin() {
+        if (hand.Count == 0) {
+            gameManager.winnerName = "AI";
+            gameManager.winner = true;
         }
     }
 }

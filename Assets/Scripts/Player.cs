@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -21,24 +20,9 @@ public class Player : MonoBehaviour
 
     public void EvaluateHand(Card openCard) {
         playableHand.Clear();
-        List<GameObject> plus4 = new();
-        bool handHasOpenColor = false;
         foreach (GameObject card in hand) {
             if (card.GetComponent<Card>().EvaluateCard(openCard.color, openCard.value)) {
-                if (card.GetComponent<Card>().color == openCard.color) {
-                    handHasOpenColor = true;
-                }
                 playableHand.Add(card);
-            }
-            if (card.GetComponent<Card>().value == "PL4") {
-                plus4.Add(card);
-            }
-        }
-        // Adding PL4 only if there's no other card with same COLOR as open one
-        if (!handHasOpenColor) {
-            playableHand = playableHand.Concat(plus4).ToList();
-            foreach (GameObject card in plus4) {
-                card.GetComponent<Card>().canBePlayed = true;
             }
         }
     }
@@ -47,7 +31,7 @@ public class Player : MonoBehaviour
         if (drawnInTurnNumber != turnNumber) {
             Card card = deck.DrawFromDeck();
             GameObject cardClone = Instantiate(cardObject, initialCardPosition, Quaternion.identity);
-            cardClone.GetComponent<Card>().SetValues(card.color, card.value, card.effects);
+            cardClone.GetComponent<Card>().SetValues(card.color, card.value);
             cardClone.GetComponent<Card>().SetSprite(cardClone);
             hand.Add(cardClone);
             RealigneHand(-3);
@@ -94,7 +78,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void CheckWin() {
+    private void CheckWin() {
         if (hand.Count == 0) {
             gameManager.winnerName = playerName;
             gameManager.winner = true;

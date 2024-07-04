@@ -601,7 +601,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioListener: {fileID: 519420029}
-  eventSystem: {fileID: 0}
 --- !u!1 &1097057489
 GameObject:
   m_ObjectHideFlags: 0
