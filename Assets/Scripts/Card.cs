@@ -63,7 +63,9 @@ public class Card : MonoBehaviour
 
     void OnMouseDown() {
         if (canBePlayed) {
-            deck.DiscardCard(openCard);
+            Card cardToDiscard = new();
+            cardToDiscard.SetValues(openCard.color, openCard.value);
+            deck.DiscardCard(cardToDiscard);
             openCard.SetValues(color, value);
             openCard.SetSprite(gameManager.openCardClone);
             activePlayer.PlayCard(this);

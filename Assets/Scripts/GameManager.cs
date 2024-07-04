@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
         openCardClone.GetComponent<Card>().SetValues(firstCard.color, firstCard.value);
         openCardClone.GetComponent<Card>().SetSprite(openCardClone);
         openCardClone.GetComponent<SpriteRenderer>().sortingOrder = 1;
+        deckClone.GetComponent<Deck>().DiscardCard(firstCard);
     }
 
     private void InitializePlayersHand() {
