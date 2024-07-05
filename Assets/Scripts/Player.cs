@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -11,6 +12,7 @@ public class Player : MonoBehaviour
     public int drawnInTurnNumber = -1;
     public bool needToChooseColor = false;
     GameManager gameManager;
+    public bool canPlayColor = false;
 
     void Update() {
         if (gameManager == null) {
@@ -20,9 +22,24 @@ public class Player : MonoBehaviour
 
     public void EvaluateHand(Card openCard) {
         playableHand.Clear();
+        List<GameObject> plus4 = new();
+        canPlayColor = false;
         foreach (GameObject card in hand) {
+            if (card.GetComponent<Card>().value == "PL4") {
+                plus4.Add(card);
+            }
             if (card.GetComponent<Card>().EvaluateCard(openCard.color, openCard.value)) {
+                if (card.GetComponent<Card>().color == openCard.color) {
+                    canPlayColor = true;
+                }
                 playableHand.Add(card);
+            }
+        }
+        // PL4 can only be played if no other card in hand has the same color as the openCard
+        if (!canPlayColor) {
+            foreach (GameObject card in plus4) {
+                playableHand.Add(card);
+                card.GetComponent<Card>().canBePlayed = true;
             }
         }
     }

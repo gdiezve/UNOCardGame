@@ -6,7 +6,7 @@ public class Card : MonoBehaviour
 {
     public string color;
     public string value;
-    private readonly string[] wildValues = { "PL4", "COL" };
+    private readonly string[] wildValues = { "COL" }; // Not adding PL4, so it can be added when evaluating hand
     public bool canBePlayed = false;
     GameManager gameManager;
     Deck deck;
