@@ -16,6 +16,22 @@ public class AI: Player
         }
     }
 
+    public new void EvaluateOpenCard(Card openCard, Deck deck, GameObject cardObject, int turnNumber, string previousPlayer) {
+        if (openCard.playedBy == previousPlayer) {
+            if (openCard.value == "PL4") {
+                Draw(openCard, deck, cardObject, turnNumber);
+                canPlay = false;
+            }
+            if (openCard.value == "PL2") {
+                Draw(openCard, deck, cardObject, turnNumber);
+                canPlay = false;
+            }
+            if (openCard.value == "SKI") {
+                canPlay = false;
+            }
+        }
+    }
+
     public new void Draw(Card openCard, Deck deck, GameObject cardObject, int turnNumber) {
         if (drawnInTurnNumber != turnNumber) {
             Card card = deck.DrawFromDeck();
@@ -41,6 +57,7 @@ public class AI: Player
             deck.DiscardCard(gameManager.openCardClone.GetComponent<Card>());
             openCard.SetValues(playedCard.color, playedCard.value);
             openCard.SetSprite(gameManager.openCardClone);
+            openCard.playedBy = "AI";
             foreach (GameObject card in hand) {
                 if (playedCard == card.GetComponent<Card>()) {
                     Destroy(card);

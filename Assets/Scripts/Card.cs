@@ -8,6 +8,7 @@ public class Card : MonoBehaviour
     public string value;
     private readonly string[] wildValues = { "COL" }; // Not adding PL4, so it can be added when evaluating hand
     public bool canBePlayed = false;
+    public string playedBy;
     GameManager gameManager;
     Deck deck;
     Card openCard;
@@ -68,6 +69,7 @@ public class Card : MonoBehaviour
             deck.DiscardCard(cardToDiscard);
             openCard.SetValues(color, value);
             openCard.SetSprite(gameManager.openCardClone);
+            openCard.playedBy = "Player1"; // TODO: change to not be hardcoded
             activePlayer.PlayCard(this);
         }
     }

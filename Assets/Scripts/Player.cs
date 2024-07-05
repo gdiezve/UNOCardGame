@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     public int drawnInTurnNumber = -1;
     public bool needToChooseColor = false;
     GameManager gameManager;
-    public bool canPlayColor = false;
 
     void Update() {
         if (gameManager == null) {
@@ -20,10 +19,26 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void EvaluateOpenCard(Card openCard, Deck deck, GameObject cardObject, int turnNumber, string previousPlayer) {
+        if (openCard.playedBy == previousPlayer) {
+            if (openCard.value == "PL4") {
+                Draw(openCard, deck, cardObject, turnNumber);
+                canPlay = false;
+            }
+            if (openCard.value == "PL2") {
+                Draw(openCard, deck, cardObject, turnNumber);
+                canPlay = false;
+            }
+            if (openCard.value == "SKI") {
+                canPlay = false;
+            }
+        }
+    }
+
     public void EvaluateHand(Card openCard) {
         playableHand.Clear();
         List<GameObject> plus4 = new();
-        canPlayColor = false;
+        bool canPlayColor = false;
         foreach (GameObject card in hand) {
             if (card.GetComponent<Card>().value == "PL4") {
                 plus4.Add(card);

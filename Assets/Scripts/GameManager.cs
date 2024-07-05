@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
         }
         openCardClone.GetComponent<Card>().SetValues(firstCard.color, firstCard.value);
         openCardClone.GetComponent<Card>().SetSprite(openCardClone);
+        openCardClone.GetComponent<Card>().playedBy = "AI"; // TODO: change to not be hardcoded
         openCardClone.GetComponent<SpriteRenderer>().sortingOrder = 1;
         deckClone.GetComponent<Deck>().DiscardCard(firstCard);
     }
