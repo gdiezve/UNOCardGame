@@ -16,14 +16,14 @@ public class AI: Player
         }
     }
 
-    public void EvaluateOpenCard(Card openCard, Deck deck, GameObject cardObject, int turnNumber, string previousPlayer) {
+    public new void EvaluateOpenCard(Card openCard, Deck deck, GameObject cardObject, string previousPlayer) {
         if (openCard.playedBy == previousPlayer) {
             if (openCard.value == "PL4") {
-                Draw(openCard, deck, cardObject, turnNumber);
+                Draw(openCard, deck, cardObject, 4);
                 canPlay = false;
             }
             if (openCard.value == "PL2") {
-                Draw(openCard, deck, cardObject, turnNumber);
+                Draw(openCard, deck, cardObject, 2);
                 canPlay = false;
             }
             if (openCard.value == "SKI") {
@@ -32,8 +32,8 @@ public class AI: Player
         }
     }
 
-    public new void Draw(Card openCard, Deck deck, GameObject cardObject, int turnNumber) {
-        if (drawnInTurnNumber != turnNumber) {
+    public new void Draw(Card openCard, Deck deck, GameObject cardObject, int numberCards) {
+        for (int i=0; i<numberCards; i++) {
             Card card = deck.DrawFromDeck();
             GameObject cardClone = Instantiate(cardObject, initialCardPosition, Quaternion.identity);
             cardClone.GetComponent<Card>().SetValues(card.color, card.value);
@@ -41,12 +41,6 @@ public class AI: Player
             SetSprite(cardClone);
             EvaluateHand(openCard);
             RealigneHand(3);
-            if (turnNumber > 0) { // To allow GameManager draw initial hand
-                drawnInTurnNumber = turnNumber;
-            }
-        } else {
-            Debug.Log("You've already drawn this turn!");
-            canPlay = false;
         }
     }
 

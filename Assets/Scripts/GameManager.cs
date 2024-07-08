@@ -58,8 +58,6 @@ public class GameManager : MonoBehaviour
 
     private void InitializePlayersHand() {
         player1.Draw(openCardClone.GetComponent<Card>(), deckClone.GetComponent<Deck>(), card, 7);
-        for(int i=0; i<7; i++) {
-            aiPlayer.Draw(openCardClone.GetComponent<Card>(), deckClone.GetComponent<Deck>(), card, turn.turnNumber);
-        }
+        aiPlayer.Draw(openCardClone.GetComponent<Card>(), deckClone.GetComponent<Deck>(), card, 7);
     }
 }

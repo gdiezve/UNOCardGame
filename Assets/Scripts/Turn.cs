@@ -12,11 +12,17 @@ public class Turn : MonoBehaviour
         if (!player1.canPlay) {
             previousPlayer = "Player1"; // TODO: change to not be hardcoded
             aiPlayer.canPlay = true;
-            aiPlayer.EvaluateOpenCard(openCard, deck, card, turnNumber, previousPlayer);
+            aiPlayer.EvaluateOpenCard(openCard, deck, card, previousPlayer);
             if (aiPlayer.canPlay) {
                 aiPlayer.EvaluateHand(openCard);
                 if (aiPlayer.playableHand.Count == 0) {
-                    aiPlayer.Draw(openCard, deck, card, turnNumber);
+                    if (aiPlayer.drawnInTurnNumber != turnNumber) {
+                        aiPlayer.Draw(openCard, deck, card, 1);
+                        aiPlayer.drawnInTurnNumber = turnNumber;
+                    } else {
+                        Debug.Log("You've already drawn this turn!");
+                        aiPlayer.canPlay = false;
+                    }
                 }
                 if (aiPlayer.canPlay) aiPlayer.PlayCard();
             }
