@@ -7,7 +7,7 @@ public class Turn : MonoBehaviour
     public string previousPlayer = "AI"; // TODO: change to not be hardcoded
 
     public void PlayTurn(Player player1, AI aiPlayer, Card openCard, Deck deck, GameObject card) {
-        player1.EvaluateOpenCard(openCard, deck, card, turnNumber, previousPlayer);
+        player1.EvaluateOpenCard(openCard, deck, card, previousPlayer);
         player1.EvaluateHand(openCard);
         if (!player1.canPlay) {
             previousPlayer = "Player1"; // TODO: change to not be hardcoded

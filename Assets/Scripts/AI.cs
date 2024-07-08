@@ -16,7 +16,7 @@ public class AI: Player
         }
     }
 
-    public new void EvaluateOpenCard(Card openCard, Deck deck, GameObject cardObject, int turnNumber, string previousPlayer) {
+    public void EvaluateOpenCard(Card openCard, Deck deck, GameObject cardObject, int turnNumber, string previousPlayer) {
         if (openCard.playedBy == previousPlayer) {
             if (openCard.value == "PL4") {
                 Draw(openCard, deck, cardObject, turnNumber);
@@ -54,6 +54,11 @@ public class AI: Player
         if (playableHand.Count > 0) {
             int cardIndex = new System.Random().Next(playableHand.Count-1);
             Card playedCard = playableHand[cardIndex].GetComponent<Card>();
+            if (playedCard.value == "PL4") {
+                Debug.Log("AI has played PL4");
+            } else if (playedCard.value == "PL2") {
+                Debug.Log("AI has played PL2");
+            }
             deck.DiscardCard(gameManager.openCardClone.GetComponent<Card>());
             openCard.SetValues(playedCard.color, playedCard.value);
             openCard.SetSprite(gameManager.openCardClone);

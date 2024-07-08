@@ -12,24 +12,29 @@ public class Player : MonoBehaviour
     public int drawnInTurnNumber = -1;
     public bool needToChooseColor = false;
     GameManager gameManager;
+    int turnNumber;
 
     void Update() {
         if (gameManager == null) {
             gameManager = FindObjectOfType<GameManager>();
+            turnNumber = gameManager.turn.turnNumber;
         }
     }
 
-    public void EvaluateOpenCard(Card openCard, Deck deck, GameObject cardObject, int turnNumber, string previousPlayer) {
+    public void EvaluateOpenCard(Card openCard, Deck deck, GameObject cardObject, string previousPlayer) {
         if (openCard.playedBy == previousPlayer) {
             if (openCard.value == "PL4") {
-                Draw(openCard, deck, cardObject, turnNumber);
+                Debug.Log("Draw PL4");
+                Draw(openCard, deck, cardObject, 4);
                 canPlay = false;
             }
             if (openCard.value == "PL2") {
-                Draw(openCard, deck, cardObject, turnNumber);
+                Debug.Log("Draw PL2");
+                Draw(openCard, deck, cardObject, 2);
                 canPlay = false;
             }
             if (openCard.value == "SKI") {
+                Debug.Log("SKIP");
                 canPlay = false;
             }
         }
@@ -59,21 +64,15 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Draw(Card openCard, Deck deck, GameObject cardObject, int turnNumber) {
-        if (drawnInTurnNumber != turnNumber) {
+    public void Draw(Card openCard, Deck deck, GameObject cardObject, int numberCards) {
+        for (int i=0; i<numberCards;i++) {
             Card card = deck.DrawFromDeck();
             GameObject cardClone = Instantiate(cardObject, initialCardPosition, Quaternion.identity);
             cardClone.GetComponent<Card>().SetValues(card.color, card.value);
             cardClone.GetComponent<Card>().SetSprite(cardClone);
             hand.Add(cardClone);
             RealigneHand(-3);
-            if (turnNumber > 0) { // To allow GameManager draw initial hand
-                drawnInTurnNumber = turnNumber;
-            }
             EvaluateHand(openCard);
-        } else {
-            Debug.Log("You've already drawn this turn!");
-            canPlay = false;
         }
     }
 

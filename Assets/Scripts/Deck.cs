@@ -81,6 +81,12 @@ public class Deck : MonoBehaviour
     } 
 
     void OnMouseDown() {
-        activePlayer.Draw(openCard, this, gameManager.card, gameManager.turn.turnNumber);
+        if (activePlayer.drawnInTurnNumber != gameManager.turn.turnNumber) {
+            activePlayer.Draw(openCard, this, gameManager.card, 1);
+            activePlayer.drawnInTurnNumber = gameManager.turn.turnNumber;
+        } else {
+            Debug.Log("You've already drawn this turn!");
+            activePlayer.canPlay = false;
+        }
     }
 }
