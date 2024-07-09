@@ -1013,6 +1013,7 @@ MonoBehaviour:
   deckClone: {fileID: 0}
   openCardClone: {fileID: 0}
   activePlayer: {fileID: 0}
+  turnObject: {fileID: 4195614126607810024, guid: f2e663a1f639a44e9932383a94221a15, type: 3}
   turn: {fileID: 0}
   winner: 0
   winnerName: 

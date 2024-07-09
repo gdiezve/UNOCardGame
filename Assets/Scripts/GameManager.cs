@@ -1,4 +1,5 @@
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,14 +21,16 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        deckClone = Instantiate(deck, deckPosition, Quaternion.identity);
-        openCardClone = Instantiate(card, openCardPosition, Quaternion.identity);
-        player1 = gameObject.AddComponent<Player>();
-        player1.SetName("Player1");
-        aiPlayer = gameObject.AddComponent<AI>();
-        aiPlayer.SetName("AI");
-        activePlayer = player1;
-        turn = gameObject.AddComponent<Turn>();
+        if(SceneManager.GetActiveScene().buildIndex == 1) {
+            deckClone = Instantiate(deck, deckPosition, Quaternion.identity);
+            openCardClone = Instantiate(card, openCardPosition, Quaternion.identity);
+            player1 = gameObject.AddComponent<Player>();
+            player1.SetName("Player1");
+            aiPlayer = gameObject.AddComponent<AI>();
+            aiPlayer.SetName("AI");
+            activePlayer = player1;
+            turn = gameObject.AddComponent<Turn>(); 
+        }
     }
 
     // Update is called once per frame

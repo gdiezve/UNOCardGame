@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ChooseColorMenu : MonoBehaviour
 {
@@ -12,8 +13,10 @@ public class ChooseColorMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameManager.activePlayer.needToChooseColor) {
-            ActivateChooseColorMenu();
+        if (SceneManager.GetActiveScene().buildIndex == 1) {
+            if (gameManager.activePlayer.needToChooseColor) {
+                ActivateChooseColorMenu();
+            }
         }
     }
 

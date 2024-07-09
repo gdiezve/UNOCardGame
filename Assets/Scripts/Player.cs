@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -12,12 +11,10 @@ public class Player : MonoBehaviour
     public int drawnInTurnNumber = -1;
     public bool needToChooseColor = false;
     GameManager gameManager;
-    int turnNumber;
 
     void Update() {
         if (gameManager == null) {
             gameManager = FindObjectOfType<GameManager>();
-            turnNumber = gameManager.turn.turnNumber;
         }
     }
 
